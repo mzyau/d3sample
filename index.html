@@ -33,7 +33,7 @@
   const canvas = d3.select("#network"),
     width = canvas.attr("width"), // will each grab 500 from the canvas element
     height = canvas.attr("height"),
-    r = 3, // radius of 3 for node circles
+    r = 10, // radius of 3 for node circles
     color = d3.scaleOrdinal(d3.schemeAccent), 
     ctx = canvas.node().getContext("2d"); // canvas.node returns the HTML DOM element
     simulation = d3.forceSimulation()
@@ -45,9 +45,7 @@
       .force("link", d3.forceLink()
         .id(function (d) { return d.name; })); // links in graph require source to be an index of the nodes graph, so this tells the links how to find the "name"
 
-
-
-  d3.json("sample.json")
+  d3.json("starwars_sample.json")
     .then(function(graph) {
       simulation
         .nodes(graph.nodes)
@@ -69,7 +67,7 @@
         graph.nodes.forEach(drawNode);
 
         ctx.beginPath(); // need to tell canvas we are creating a path
-        ctx.globalAlpha = 0.05; // lighter opacity for the links
+        ctx.globalAlpha = 1; // lighter opacity for the links
         ctx.strokeStyle = "#aaa";
         graph.links.forEach(drawLink); 
         ctx.stroke(); // method for drawing the line

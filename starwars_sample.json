@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "name": "Person"
+    },
+    {
+      "name": "Species"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "name"
+    },
+    {
+      "name": "mass"
+    },
+    {
+      "name": "hair_color"
+    },
+    {
+      "name": "skin_color"
+    },
+    {
+      "name": "eye_color"
+    },
+    {
+      "name": "species_id"
+    }
+  ],
+  "links": [
+    {
+      "source": "Person", "target": "id"
+    },
+    {
+      "source": "Person", "target": "name"
+    },
+    {
+      "source": "Person", "target": "mass"
+    },
+    {
+      "source": "Person", "target": "hair_color"
+    },
+    {
+      "source": "Person", "target": "skin_color"
+    },
+    {
+      "source": "Person", "target": "eye_color"
+    },
+    {
+      "source": "Person", "target": "species_id"
+    },
+    {
+      "source": "species_id", "target": "Species"
+    }
+
+  ]
+}
