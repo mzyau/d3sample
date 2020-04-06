@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D3 Sample</title>
+</head>
+<body>
+<h1>D3 Sample</h1>
+<canvas id = "network" width = "500" height = "500"></canvas>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+  // Just a sample manual dataset below:
+  // const graph = {
+  //   nodes: [
+  //     {name: "John", age: 36},
+  //     {name: "Mafe", age: 34},
+  //     {name: "Edwin", age: 39},
+  //     {name: "Santi", age: 8},
+  //     {name: "David", age: 3},
+  //     {name: "Yuli", age: 30},
+  //   ],
+  //   links: [
+  //     {source: "John", target: "Mafe"},
+  //     {source: "John", target: "Edwin"},
+  //     {source: "Edwin", target: "Santi"},
+  //     {source: "Edwin", target: "David"},
+  //     {source: "Santi", target: "David"},
+  //     {source: "Edwin", target: "Yuli"},
+  //   ]
+  // };
+
+  const canvas = d3.select("#network"),
+    width = canvas.attr("width"), // will each grab 500 from the canvas element
+    height = canvas.attr("height"),
+    r = 3, // radius of 3 for node circles
+    color = d3.scaleOrdinal(d3.schemeAccent), 
+    ctx = canvas.node().getContext("2d"); // canvas.node returns the HTML DOM element
+    simulation = d3.forceSimulation()
+      .force("x", d3.forceX(width/2)) //determines where the center of simulation is; instead of width/2 can replace with a function
+      // that returns e.g. d.party (which will group the nodes by their party)
+      .force("y", d3.forceY(height/2))
+      .force("collide", d3.forceCollide(r+3)) // don't want nodes to collide
+      .force("charge", d3.forceManyBody().strength(-50))
+      .force("link", d3.forceLink()
+        .id(function (d) { return d.name; })); // links in graph require source to be an index of the nodes graph, so this tells the links how to find the "name"
+
+
+
+  d3.json("sample.json")
+    .then(function(graph) {
+      simulation
+        .nodes(graph.nodes)
+        .on("tick", update)
+        .force("link")
+        .links(graph.links);
+
+      canvas
+        .call(d3.drag()
+          .container(canvas.node())
+          .subject(dragsubject)
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+
+      function update() {
+        ctx.clearRect(0, 0, width, height); // clears the whole canvas from (0,0) coordinates to width and heiight
+        ctx.globalAlpha = 1.0; // nodes full opacity
+        graph.nodes.forEach(drawNode);
+
+        ctx.beginPath(); // need to tell canvas we are creating a path
+        ctx.globalAlpha = 0.05; // lighter opacity for the links
+        ctx.strokeStyle = "#aaa";
+        graph.links.forEach(drawLink); 
+        ctx.stroke(); // method for drawing the line
+      }
+
+      function dragsubject() {
+        return simulation.find(d3.event.x, d3.event.y);
+      }
+    })
+    .catch(function(err) {
+      if (err) throw err;
+    });
+  
+   
+  function drawNode(d) {
+    ctx.beginPath(); // need to tell canvas we are creating a path
+    ctx.fillStyle = color(d.party); // attribute that contains the party
+    ctx.moveTo(d.x, d.y); // move the cursor to coordinates x and y of given d
+    ctx.arc(d.x, d.y, r, 0, 2 * Math.PI); // arc draws a circle centered at [x,y] with radius starting from 0
+    ctx.fill(); // will tell the canvas to draw everything
+  }
+  function drawLink(l) {
+    ctx.moveTo(l.source.x, l.source.y); // move the cursor to coordinates x and y of given l
+    ctx.lineTo(l.target.x, l.target.y); // draw the line to coordinates x and y of given l
+  }
+
+  function dragstarted() {
+  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  d3.event.subject.fx = d3.event.subject.x;
+  d3.event.subject.fy = d3.event.subject.y;
+  console.log(d3.event.subject); // when dragged will console log the node selected
+  }
+
+  function dragged() {
+    d3.event.subject.fx = d3.event.x;
+    d3.event.subject.fy = d3.event.y;
+  }
+
+  function dragended() {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    d3.event.subject.fx = null;
+    d3.event.subject.fy = null;
+  } 
+
+
+
+
+    // assigning a random x and y for now to allow the drawNode function to access [x,y]
+    // graph.nodes.forEach(function (d) {
+    //   d.x = Math.random() * width;
+    //   d.y = Math.random() * height;
+    // });
+
+
+
+  // update(); // no longer need to call here if importing a json and doing that in the callback
+</script>
+  
+</body>
+</html>
