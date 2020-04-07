@@ -1,0 +1,56 @@
+type Fixture {
+  date: String
+  status: String
+  matchday: Int
+  homeTeamName: String
+  awayTeamName: String
+  result: Result
+  odds: String
+  round: String
+}
+
+type Info {
+  caption: String!
+  league: String
+  year: String
+  currentMatchday: Int
+  numberOfMatchdays: Int
+  numberOfTeams: Int
+  numberOfGames: Int
+  lastUpdated: String
+}
+
+type Player {
+  name: String
+  position: String
+  jerseyNumber: Int
+  dateOfBirth: String
+  nationality: String
+  contractUntil: String
+  marketValue: String
+}
+
+type Query {
+  info: Info
+  teams(name: String): [Team]!
+  players(teamID: Int!): [Player]!
+  games(teamID: Int!): [Fixture]!
+  fixtures: [Fixture]!
+}
+
+type Result {
+  goalsHomeTeam: Int
+  goalsAwayTeam: Int
+}
+
+type Team {
+  id: Int
+  name: String!
+  code: String
+  shortName: String
+  squadMarketValue: String
+  flag: String
+  players: [Player] @deprecated
+  games: [Fixture] @deprecated
+}
+
