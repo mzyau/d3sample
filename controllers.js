@@ -1,4 +1,3 @@
-const { introspectionQuery } = require('./introspectionquery.js');
 const { getIntrospectionQuery } = require ('graphql');
 const { buildClientSchema } = require ('graphql');
 const { buildSchema } = require ('graphql');
