@@ -1,0 +1,138 @@
+{
+  "nodes": 
+  [
+    {
+      "name": "Query",
+      "type": "table"
+    },
+    {
+      "name": "Team",
+      "type": "table"
+    },
+    {
+      "name": "Player",
+      "type": "table"
+    },
+    {
+      "name": "Fixture",
+      "type": "table"
+    },
+    {
+      "name": "info",
+      "type": "field",
+      "refs": "Info"
+    },
+    {
+      "name": "teams",
+      "type": "field",
+      "refs": "Team"
+    },
+    {
+      "name": "players",
+      "type": "field",
+      "refs": "Player"
+    },
+    {
+      "name": "games",
+      "type": "field",
+      "refs": "Fixture"
+    },
+    {
+      "name": "fixtures",
+      "type": "field",
+      "refs": "Fixture"
+    },
+    {
+      "name": "Info",
+      "type": "table"
+    },
+    {
+      "name": "caption",
+      "type": "field"
+    },
+    {
+      "name": "league",
+      "type": "field"
+    },
+    {
+      "name": "year",
+      "type": "field"
+    },
+    {
+      "name": "currentMatchday",
+      "type": "field"
+    },
+    {
+      "name": "numberOfMatchdays",
+      "type": "field"
+    },
+    {
+      "name": "numberOfTeams",
+      "type": "field"
+    },
+    {
+      "name": "numberOfGames",
+      "type": "field"
+    },
+    {
+      "name": "lastUpdated",
+      "type": "field"
+    }
+  ],
+  "links": [
+    {
+      "source": "Query", "target": "info"
+    },
+    {
+      "source": "Query", "target": "teams"
+    },
+    {
+      "source": "Query", "target": "players"
+    },
+    {
+      "source": "Query", "target": "games"
+    },
+    {
+      "source": "Query", "target": "fixtures"
+    },
+    {
+      "source": "info", "target": "Info"
+    },
+    {
+      "source": "teams", "target": "Team"
+    },
+    {
+      "source": "players", "target": "Player"
+    },
+    {
+      "source": "games", "target": "Fixture"
+    },
+    {
+      "source": "fixtures", "target": "Fixture"
+    },
+    {
+      "source": "Info", "target": "caption"
+    },
+    {
+      "source": "Info", "target": "league"
+    },
+    {
+      "source": "Info", "target": "year"
+    },
+    {
+      "source": "Info", "target": "currentMatchday"
+    },
+    {
+      "source": "Info", "target": "numberOfMatchdays"
+    },
+    {
+      "source": "Info", "target": "numberOfTeams"
+    },
+    {
+      "source": "Info", "target": "numberOfGames"
+    },
+    {
+      "source": "Info", "target": "lastUpdated"
+    }
+  ]
+}

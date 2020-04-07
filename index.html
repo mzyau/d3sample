@@ -32,20 +32,18 @@
 
   const canvas = d3.select("#network"),
     width = canvas.attr("width"), // will each grab 500 from the canvas element
-    height = canvas.attr("height"),
-    r = 10, // radius of 3 for node circles
+    height = canvas.attr("height"), 
     color = d3.scaleOrdinal(d3.schemeAccent), 
     ctx = canvas.node().getContext("2d"); // canvas.node returns the HTML DOM element
     simulation = d3.forceSimulation()
       .force("x", d3.forceX(width/2)) //determines where the center of simulation is; instead of width/2 can replace with a function
       // that returns e.g. d.party (which will group the nodes by their party)
       .force("y", d3.forceY(height/2))
-      .force("collide", d3.forceCollide(r+3)) // don't want nodes to collide
-      .force("charge", d3.forceManyBody().strength(-50))
+      .force("charge", d3.forceManyBody().strength(-100))
       .force("link", d3.forceLink()
         .id(function (d) { return d.name; })); // links in graph require source to be an index of the nodes graph, so this tells the links how to find the "name"
 
-  d3.json("starwars_sample.json")
+  d3.json("worldcupd3.json")
     .then(function(graph) {
       simulation
         .nodes(graph.nodes)
@@ -63,11 +61,11 @@
 
       function update() {
         ctx.clearRect(0, 0, width, height); // clears the whole canvas from (0,0) coordinates to width and heiight
-        ctx.globalAlpha = 1.0; // nodes full opacity
+        ctx.globalAlpha = 0.8; // nodes full opacity
         graph.nodes.forEach(drawNode);
 
         ctx.beginPath(); // need to tell canvas we are creating a path
-        ctx.globalAlpha = 1; // lighter opacity for the links
+        ctx.globalAlpha = 0.5; // lighter opacity for the links
         ctx.strokeStyle = "#aaa";
         graph.links.forEach(drawLink); 
         ctx.stroke(); // method for drawing the line
@@ -84,9 +82,23 @@
    
   function drawNode(d) {
     ctx.beginPath(); // need to tell canvas we are creating a path
-    ctx.fillStyle = color(d.party); // attribute that contains the party
+    ctx.fillStyle = color(d.type); // attribute that contains the party
+    ctx.font = "normal normal 900 10px CourierBlack";
     ctx.moveTo(d.x, d.y); // move the cursor to coordinates x and y of given d
-    ctx.arc(d.x, d.y, r, 0, 2 * Math.PI); // arc draws a circle centered at [x,y] with radius starting from 0
+    // factor will center the text if in a table node
+    if (d.type === "table") {
+      r = 25;
+      factor_x = -0.5;
+      factor_y = 0;
+    }
+    else {
+      r = 10;
+      factor_x = 1;
+      factor_y
+    }
+    simulation.force("collide", d3.forceCollide(r+ 20)) // don't want nodes to collide
+    ctx.arc(d.x, d.y, r, 0, 2 * Math.PI); // arc draws a circle centered at [x,y] with radius starting from 0, radius of 6 for node circles
+    ctx.fillText(d.name, d.x + r*factor_x, d.y + r*factor_y);
     ctx.fill(); // will tell the canvas to draw everything
   }
   function drawLink(l) {
@@ -111,9 +123,6 @@
     d3.event.subject.fx = null;
     d3.event.subject.fy = null;
   } 
-
-
-
 
     // assigning a random x and y for now to allow the drawNode function to access [x,y]
     // graph.nodes.forEach(function (d) {

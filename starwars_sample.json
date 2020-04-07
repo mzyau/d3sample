@@ -1,10 +1,12 @@
 {
   "nodes": [
     {
-      "name": "Person"
+      "name": "Person",
+      "type": "table"
     },
     {
-      "name": "Species"
+      "name": "Species",
+      "type": "table"
     },
     {
       "name": "id"
@@ -53,6 +55,5 @@
     {
       "source": "species_id", "target": "Species"
     }
-
   ]
 }
