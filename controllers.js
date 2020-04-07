@@ -3,6 +3,8 @@ const { getIntrospectionQuery } = require ('graphql');
 const { buildClientSchema } = require ('graphql');
 const { buildSchema } = require ('graphql');
 const { printSchema } = require ('graphql');
+const fs = require('fs');
+const path = require('path');
 const graphURL = "https://worldcup-graphql.now.sh/";
 const fetch = require('node-fetch');
 
@@ -21,18 +23,14 @@ controller.getSchema = (req, res, next) => {
   })
     .then(res => res.json())
     .then(data => {
-      res.locals.data = data;
-      res.locals.schema = buildClientSchema(data.data);
-      console.log(res.locals.schema);
+      res.locals.schema = JSON.stringify(data, null, 2); // put " data cleaning" function in 2nd parameter of stringify
+      // Writes and saves the JSON file retrieved from introspection query into root folder
+      fs.writeFileSync(path.resolve(__dirname, "schema.json"), res.locals.schema);
+      // Stores the file path for future middleware to access to implement in d3
+      res.locals.path = path.resolve(__dirname, "schema.json");
     })
     .then(() => next());
 };
 
-// Builds the schema into a graphQL data file from the JSON file received from getSchema
-controller.buildSchema = (req, res, next) => {
-  const schemaFile = buildClientSchema(res.locals.schema);
-  console.log(schemaFile);
-  return next();
-};
 
 module.exports = controller;
