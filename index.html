@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>D3 Sample</h1>
-<canvas id = "network" width = "500" height = "500"></canvas>
+<canvas id = "network" width = "1000" height = "500"></canvas>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script>
   // Just a sample manual dataset below:
@@ -39,7 +39,7 @@
       .force("x", d3.forceX(width/2)) //determines where the center of simulation is; instead of width/2 can replace with a function
       // that returns e.g. d.party (which will group the nodes by their party)
       .force("y", d3.forceY(height/2))
-      .force("charge", d3.forceManyBody().strength(-100))
+      .force("charge", d3.forceManyBody().strength(-70))
       .force("link", d3.forceLink()
         .id(function (d) { return d.name; })); // links in graph require source to be an index of the nodes graph, so this tells the links how to find the "name"
 
@@ -83,20 +83,20 @@
   function drawNode(d) {
     ctx.beginPath(); // need to tell canvas we are creating a path
     ctx.fillStyle = color(d.type); // attribute that contains the party
-    ctx.font = "normal normal 900 10px CourierBlack";
+    ctx.font = "normal normal 900 14px Courier";
     ctx.moveTo(d.x, d.y); // move the cursor to coordinates x and y of given d
     // factor will center the text if in a table node
     if (d.type === "table") {
-      r = 25;
+      r = 35;
       factor_x = -0.5;
       factor_y = 0;
     }
     else {
-      r = 10;
+      r = 15;
       factor_x = 1;
       factor_y
     }
-    simulation.force("collide", d3.forceCollide(r+ 20)) // don't want nodes to collide
+    simulation.force("collide", d3.forceCollide(r+ 25)) // don't want nodes to collide
     ctx.arc(d.x, d.y, r, 0, 2 * Math.PI); // arc draws a circle centered at [x,y] with radius starting from 0, radius of 6 for node circles
     ctx.fillText(d.name, d.x + r*factor_x, d.y + r*factor_y);
     ctx.fill(); // will tell the canvas to draw everything
