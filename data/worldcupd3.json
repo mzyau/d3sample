@@ -3,19 +3,19 @@
   [
     {
       "name": "Query",
-      "type": "table"
+      "type": "Type"
     },
     {
       "name": "Team",
-      "type": "table"
+      "type": "Type"
     },
     {
       "name": "Player",
-      "type": "table"
+      "type": "Type"
     },
     {
       "name": "Fixture",
-      "type": "table"
+      "type": "Type"
     },
     {
       "name": "info",
@@ -44,7 +44,7 @@
     },
     {
       "name": "Info",
-      "type": "table"
+      "type": "Type"
     },
     {
       "name": "caption",

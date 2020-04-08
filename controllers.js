@@ -23,10 +23,6 @@ controller.getSchema = (req, res, next) => {
     .then(res => res.json())
     .then(data => {
       res.locals.schema = JSON.stringify(data, null, 2); // put " data cleaning" function in 2nd parameter of stringify
-      // Writes and saves the JSON file retrieved from introspection query into root folder
-      // fs.writeFileSync(path.resolve(__dirname, "schema.json"), res.locals.schema);
-      // Stores the file path for future middleware to access to implement in d3
-      // res.locals.path = path.resolve(__dirname, "schema.json");
     })
     .then(() => next());
 };
@@ -50,7 +46,12 @@ controller.getSchema = (req, res, next) => {
 controller.convertSchema = (req, res, next) => {
   const sourceSchema = JSON.parse(res.locals.schema);
   const cleanedSchema = cleanSchema(sourceSchema);
-  console.log(cleanedSchema);
+  const d3Json = schemaToD3(cleanedSchema);
+  // Writes and saves the JSON file into root folder
+  fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
+  // Stores the file path for future middleware to access to implement in d3
+  res.locals.path = path.resolve(__dirname, 'd3schema.json');
+  console.log(d3Json);
   return next();
 };
 
@@ -58,8 +59,8 @@ function cleanSchema(sourceSchema) {
   const schemaTypes = sourceSchema.data.__schema.types;
   const types = {};
   for (let i = 0; i < schemaTypes.length; i++) {
-    //iterate only through relevant types (tables)
-    if (schemaTypes[i].fields !== null && schemaTypes[i].name.indexOf('__') === -1){
+  // iterate only through relevant types (tables)
+    if (schemaTypes[i].fields !== null && schemaTypes[i].name.indexOf('__') === -1) {
       const fieldsList = [];
       // Iterate through the fields array of each type (table)
       for (let j = 0; j < schemaTypes[i].fields.length; j++) {
@@ -73,12 +74,54 @@ function cleanSchema(sourceSchema) {
           } else {
             fieldsList.push(schemaTypes[i].fields[j].name);
           }
-       } 
-     }
+        }
+      }
       types[schemaTypes[i].name] = fieldsList;
     }
   }
   return types;
+}
+
+function schemaToD3(cleanedSchema) {
+  const d3Json = {};
+  const nodesArray = [];
+  const linksArray = [];
+  // eslint-disable-next-line no-use-before-define
+  for (let key in cleanedSchema) {
+    const node = {};
+    node.name = key;
+    node.type = 'Type';
+    nodesArray.push(node);
+    for (let i = 0; i < cleanedSchema[key].length; i++) {
+      if (typeof cleanedSchema[key][i] !== 'object') {
+        const node = {};
+        node.name = cleanedSchema[key][i];
+        node.type = 'field';
+        nodesArray.push(node);
+        const link = {};
+        link.source = key;
+        link.target = cleanedSchema[key][i];
+        linksArray.push(link);
+      } else {
+        const node = {};
+        const fieldName = Object.keys(cleanedSchema[key][i]);
+        node.name = fieldName[0];
+        node.type = 'field';
+        nodesArray.push(node);
+        const linkField = {};
+        linkField.source = fieldName[0];
+        linkField.target = cleanedSchema[key][i][fieldName];
+        linksArray.push(linkField);
+        const linkType = {};
+        linkType.source = key;
+        linkType.target = fieldName[0];
+        linksArray.push(linkType);
+      }
+    }
+  }
+  d3Json.nodes = nodesArray;
+  d3Json.links = linksArray;
+  return d3Json;
 }
 
 

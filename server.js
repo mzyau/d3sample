@@ -11,7 +11,7 @@ app.get('/', (req, res, next) => {
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
 app.get('/getschema', controller.getSchema, controller.convertSchema, (req,res, next) => {
-  res.status(200).json(res.locals.schema);
+  res.sendStatus(200);
 });
 
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
