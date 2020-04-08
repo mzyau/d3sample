@@ -43,7 +43,7 @@
       .force("link", d3.forceLink()
         .id(function (d) { return d.name; })); // links in graph require source to be an index of the nodes graph, so this tells the links how to find the "name"
 
-  d3.json("worldcupd3.json")
+  d3.json("./data/worldcupd3.json")
     .then(function(graph) {
       simulation
         .nodes(graph.nodes)
