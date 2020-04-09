@@ -1,342 +1,342 @@
 {
   "nodes": [
     {
-      "name": "Query",
+      "name": "Query&",
       "type": "Type"
     },
     {
-      "name": "info",
+      "name": "query&Query",
       "type": "field"
     },
     {
-      "name": "teams",
+      "name": "query&Query",
       "type": "field"
     },
     {
-      "name": "players",
+      "name": "pokemons&Query",
       "type": "field"
     },
     {
-      "name": "games",
+      "name": "pokemon&Query",
       "type": "field"
     },
     {
-      "name": "fixtures",
+      "name": "pokemon&Query",
       "type": "field"
     },
     {
-      "name": "Info",
+      "name": "Pokemon&",
       "type": "Type"
     },
     {
-      "name": "caption",
+      "name": "id&Pokemon",
       "type": "field"
     },
     {
-      "name": "league",
+      "name": "number&Pokemon",
       "type": "field"
     },
     {
-      "name": "year",
+      "name": "name&Pokemon",
       "type": "field"
     },
     {
-      "name": "currentMatchday",
+      "name": "weight&Pokemon",
       "type": "field"
     },
     {
-      "name": "numberOfMatchdays",
+      "name": "weight&Pokemon",
       "type": "field"
     },
     {
-      "name": "numberOfTeams",
+      "name": "height&Pokemon",
       "type": "field"
     },
     {
-      "name": "numberOfGames",
+      "name": "height&Pokemon",
       "type": "field"
     },
     {
-      "name": "lastUpdated",
+      "name": "classification&Pokemon",
       "type": "field"
     },
     {
-      "name": "Team",
+      "name": "types&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "resistant&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "attacks&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "attacks&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "weaknesses&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "fleeRate&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "maxCP&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "evolutions&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "evolutionRequirements&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "evolutionRequirements&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "maxHP&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "image&Pokemon",
+      "type": "field"
+    },
+    {
+      "name": "PokemonDimension&",
       "type": "Type"
     },
     {
-      "name": "id",
+      "name": "minimum&PokemonDimension",
       "type": "field"
     },
     {
-      "name": "name",
+      "name": "maximum&PokemonDimension",
       "type": "field"
     },
     {
-      "name": "code",
-      "type": "field"
-    },
-    {
-      "name": "shortName",
-      "type": "field"
-    },
-    {
-      "name": "squadMarketValue",
-      "type": "field"
-    },
-    {
-      "name": "flag",
-      "type": "field"
-    },
-    {
-      "name": "Player",
+      "name": "PokemonAttack&",
       "type": "Type"
     },
     {
-      "name": "name",
+      "name": "fast&PokemonAttack",
       "type": "field"
     },
     {
-      "name": "position",
+      "name": "special&PokemonAttack",
       "type": "field"
     },
     {
-      "name": "jerseyNumber",
-      "type": "field"
-    },
-    {
-      "name": "dateOfBirth",
-      "type": "field"
-    },
-    {
-      "name": "nationality",
-      "type": "field"
-    },
-    {
-      "name": "contractUntil",
-      "type": "field"
-    },
-    {
-      "name": "marketValue",
-      "type": "field"
-    },
-    {
-      "name": "Fixture",
+      "name": "Attack&",
       "type": "Type"
     },
     {
-      "name": "date",
+      "name": "name&Attack",
       "type": "field"
     },
     {
-      "name": "status",
+      "name": "type&Attack",
       "type": "field"
     },
     {
-      "name": "matchday",
+      "name": "damage&Attack",
       "type": "field"
     },
     {
-      "name": "homeTeamName",
-      "type": "field"
-    },
-    {
-      "name": "awayTeamName",
-      "type": "field"
-    },
-    {
-      "name": "result",
-      "type": "field"
-    },
-    {
-      "name": "odds",
-      "type": "field"
-    },
-    {
-      "name": "round",
-      "type": "field"
-    },
-    {
-      "name": "Result",
+      "name": "PokemonEvolutionRequirement&",
       "type": "Type"
     },
     {
-      "name": "goalsHomeTeam",
+      "name": "amount&PokemonEvolutionRequirement",
       "type": "field"
     },
     {
-      "name": "goalsAwayTeam",
+      "name": "name&PokemonEvolutionRequirement",
       "type": "field"
     }
   ],
   "links": [
     {
-      "source": "info",
-      "target": "Info"
+      "source": "query&Query",
+      "target": "Query&"
     },
     {
-      "source": "Query",
-      "target": "info"
+      "source": "Query&",
+      "target": "query&Query"
     },
     {
-      "source": "teams",
-      "target": "Team"
+      "source": "Query&",
+      "target": "query&Query"
     },
     {
-      "source": "Query",
-      "target": "teams"
+      "source": "pokemons&Query",
+      "target": "Pokemon&"
     },
     {
-      "source": "players",
-      "target": "Player"
+      "source": "Query&",
+      "target": "pokemons&Query"
     },
     {
-      "source": "Query",
-      "target": "players"
+      "source": "pokemon&Query",
+      "target": "Pokemon&"
     },
     {
-      "source": "games",
-      "target": "Fixture"
+      "source": "Query&",
+      "target": "pokemon&Query"
     },
     {
-      "source": "Query",
-      "target": "games"
+      "source": "Query&",
+      "target": "pokemon&Query"
     },
     {
-      "source": "fixtures",
-      "target": "Fixture"
+      "source": "Pokemon&",
+      "target": "id&Pokemon"
     },
     {
-      "source": "Query",
-      "target": "fixtures"
+      "source": "Pokemon&",
+      "target": "number&Pokemon"
     },
     {
-      "source": "Info",
-      "target": "caption"
+      "source": "Pokemon&",
+      "target": "name&Pokemon"
     },
     {
-      "source": "Info",
-      "target": "league"
+      "source": "weight&Pokemon",
+      "target": "PokemonDimension&"
     },
     {
-      "source": "Info",
-      "target": "year"
+      "source": "Pokemon&",
+      "target": "weight&Pokemon"
     },
     {
-      "source": "Info",
-      "target": "currentMatchday"
+      "source": "Pokemon&",
+      "target": "weight&Pokemon"
     },
     {
-      "source": "Info",
-      "target": "numberOfMatchdays"
+      "source": "height&Pokemon",
+      "target": "PokemonDimension&"
     },
     {
-      "source": "Info",
-      "target": "numberOfTeams"
+      "source": "Pokemon&",
+      "target": "height&Pokemon"
     },
     {
-      "source": "Info",
-      "target": "numberOfGames"
+      "source": "Pokemon&",
+      "target": "height&Pokemon"
     },
     {
-      "source": "Info",
-      "target": "lastUpdated"
+      "source": "Pokemon&",
+      "target": "classification&Pokemon"
     },
     {
-      "source": "Team",
-      "target": "id"
+      "source": "Pokemon&",
+      "target": "types&Pokemon"
     },
     {
-      "source": "Team",
-      "target": "name"
+      "source": "Pokemon&",
+      "target": "resistant&Pokemon"
     },
     {
-      "source": "Team",
-      "target": "code"
+      "source": "attacks&Pokemon",
+      "target": "PokemonAttack&"
     },
     {
-      "source": "Team",
-      "target": "shortName"
+      "source": "Pokemon&",
+      "target": "attacks&Pokemon"
     },
     {
-      "source": "Team",
-      "target": "squadMarketValue"
+      "source": "Pokemon&",
+      "target": "attacks&Pokemon"
     },
     {
-      "source": "Team",
-      "target": "flag"
+      "source": "Pokemon&",
+      "target": "weaknesses&Pokemon"
     },
     {
-      "source": "Player",
-      "target": "name"
+      "source": "Pokemon&",
+      "target": "fleeRate&Pokemon"
     },
     {
-      "source": "Player",
-      "target": "position"
+      "source": "Pokemon&",
+      "target": "maxCP&Pokemon"
     },
     {
-      "source": "Player",
-      "target": "jerseyNumber"
+      "source": "evolutions&Pokemon",
+      "target": "Pokemon&"
     },
     {
-      "source": "Player",
-      "target": "dateOfBirth"
+      "source": "Pokemon&",
+      "target": "evolutions&Pokemon"
     },
     {
-      "source": "Player",
-      "target": "nationality"
+      "source": "evolutionRequirements&Pokemon",
+      "target": "PokemonEvolutionRequirement&"
     },
     {
-      "source": "Player",
-      "target": "contractUntil"
+      "source": "Pokemon&",
+      "target": "evolutionRequirements&Pokemon"
     },
     {
-      "source": "Player",
-      "target": "marketValue"
+      "source": "Pokemon&",
+      "target": "evolutionRequirements&Pokemon"
     },
     {
-      "source": "Fixture",
-      "target": "date"
+      "source": "Pokemon&",
+      "target": "maxHP&Pokemon"
     },
     {
-      "source": "Fixture",
-      "target": "status"
+      "source": "Pokemon&",
+      "target": "image&Pokemon"
     },
     {
-      "source": "Fixture",
-      "target": "matchday"
+      "source": "PokemonDimension&",
+      "target": "minimum&PokemonDimension"
     },
     {
-      "source": "Fixture",
-      "target": "homeTeamName"
+      "source": "PokemonDimension&",
+      "target": "maximum&PokemonDimension"
     },
     {
-      "source": "Fixture",
-      "target": "awayTeamName"
+      "source": "fast&PokemonAttack",
+      "target": "Attack&"
     },
     {
-      "source": "result",
-      "target": "Result"
+      "source": "PokemonAttack&",
+      "target": "fast&PokemonAttack"
     },
     {
-      "source": "Fixture",
-      "target": "result"
+      "source": "special&PokemonAttack",
+      "target": "Attack&"
     },
     {
-      "source": "Fixture",
-      "target": "odds"
+      "source": "PokemonAttack&",
+      "target": "special&PokemonAttack"
     },
     {
-      "source": "Fixture",
-      "target": "round"
+      "source": "Attack&",
+      "target": "name&Attack"
     },
     {
-      "source": "Result",
-      "target": "goalsHomeTeam"
+      "source": "Attack&",
+      "target": "type&Attack"
     },
     {
-      "source": "Result",
-      "target": "goalsAwayTeam"
+      "source": "Attack&",
+      "target": "damage&Attack"
+    },
+    {
+      "source": "PokemonEvolutionRequirement&",
+      "target": "amount&PokemonEvolutionRequirement"
+    },
+    {
+      "source": "PokemonEvolutionRequirement&",
+      "target": "name&PokemonEvolutionRequirement"
     }
   ]
 }

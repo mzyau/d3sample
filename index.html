@@ -39,7 +39,7 @@
       .force("x", d3.forceX(width/2)) //determines where the center of simulation is; instead of width/2 can replace with a function
       // that returns e.g. d.party (which will group the nodes by their party)
       .force("y", d3.forceY(height/2))
-      .force("charge", d3.forceManyBody().strength(-30))
+      .force("charge", d3.forceManyBody().strength(-1))
       .force("link", d3.forceLink()
         .id(function (d) { return d.name; })); // links in graph require source to be an index of the nodes graph, so this tells the links how to find the "name"
 
@@ -87,18 +87,19 @@
     ctx.moveTo(d.x, d.y); // move the cursor to coordinates x and y of given d
     // factor will center the text if in a Type node
     if (d.type === "Type") {
-      r = 35;
+      r = 20;
       factor_x = -0.5;
       factor_y = 0;
     }
     else {
-      r = 15;
+      r = 8;
       factor_x = 1;
       factor_y = 1;
     }
-    simulation.force("collide", d3.forceCollide(r+30)) // don't want nodes to collide
+    simulation.force("collide", d3.forceCollide(r+20)) // don't want nodes to collide
     ctx.arc(d.x, d.y, r, 0, 2 * Math.PI); // arc draws a circle centered at [x,y] with radius starting from 0, radius of 6 for node circles
-    ctx.fillText(d.name, d.x + r*factor_x, d.y + r*factor_y);
+    // only display the name before the &, after the & is the Type that it belongs to
+    ctx.fillText(d.name.split('&')[0], d.x + r*factor_x, d.y + r*factor_y);
     ctx.fill(); // will tell the canvas to draw everything
   }
   function drawLink(l) {

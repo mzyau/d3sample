@@ -4,8 +4,9 @@ const { buildSchema } = require ('graphql');
 const { printSchema } = require ('graphql');
 const fs = require('fs');
 const path = require('path');
-const graphURL = "https://worldcup-graphql.now.sh/";
+// const graphURL = "https://worldcup-graphql.now.sh/";
 // const graphURL = "https://polaris.shopify.com/api";
+const graphURL = "https://graphql-pokemon.now.sh/";
 const fetch = require('node-fetch');
 
 const controller = {};
@@ -33,6 +34,7 @@ controller.getSchema = (req, res, next) => {
 // output is in format e.g.:
 
 controller.convertSchema = (req, res, next) => {
+
   const sourceSchema = JSON.parse(res.locals.schema);
   const cleanedSchema = cleanSchema(sourceSchema);
   const d3Json = schemaToD3(cleanedSchema);
@@ -71,6 +73,12 @@ function cleanSchema(sourceSchema) {
           if (schemaTypes[i].fields[j].type.kind === 'OBJECT') {
             const fieldsLink = {};
             fieldsLink[schemaTypes[i].fields[j].name] = schemaTypes[i].fields[j].type.name;
+            fieldsList.push(fieldsLink);
+          }
+          // checks if the type of a field is a list and references another Type
+          if (schemaTypes[i].fields[j].type.kind === 'LIST' && schemaTypes[i].fields[j].type.ofType.kind === 'OBJECT') {
+            const fieldsLink = {};
+            fieldsLink[schemaTypes[i].fields[j].name] = schemaTypes[i].fields[j].type.ofType.name;
             fieldsList.push(fieldsLink);
           } else if (schemaTypes[i].fields[j].type.ofType && schemaTypes[i].fields[j].type.ofType.ofType) {
             // creates a key-value pair of relationship between the field name and the Type if it points to another Type
@@ -111,38 +119,42 @@ function schemaToD3(cleanedSchema) {
   const nodesArray = [];
   const linksArray = [];
   const typesArray = Object.keys(cleanedSchema);
+  // name each node with an & followed by the Type that the field belongs to, to solve for cases
+  // where multiple fields have the same name across different Types
   // eslint-disable-next-line no-use-before-define
   for (let key in cleanedSchema) {
     const node = {};
-    node.name = key;
+    node.name = key + '&';
     node.type = 'Type';
     nodesArray.push(node);
+    // assigning field nodes within each Type
     for (let i = 0; i < cleanedSchema[key].length; i++) {
       // create nodes for fields that do not return other Types
       const fieldName = Object.keys(cleanedSchema[key][i]);
       if (typeof cleanedSchema[key][i] !== 'object') {
         const node = {};
-        node.name = cleanedSchema[key][i];
+        node.name = cleanedSchema[key][i]+ '&' + key;
         node.type = 'field';
         nodesArray.push(node);
         // create links from each Type to their fields
         const link = {};
-        link.source = key;
-        link.target = cleanedSchema[key][i];
+        link.source = key + '&';
+        link.target = node.name;
         linksArray.push(link);
       } 
       else {
         const node = {};
-        node.name = fieldName[0];
+        node.name = fieldName[0] + '&' + key;
         node.type = 'field';
         nodesArray.push(node);
+        // Create link from fields to other Types
         const linkField = {};
-        linkField.source = fieldName[0];
-        linkField.target = cleanedSchema[key][i][fieldName];
+        linkField.source = node.name;
+        linkField.target = cleanedSchema[key][i][fieldName] + '&';
         linksArray.push(linkField);
         const linkType = {};
-        linkType.source = key;
-        linkType.target = fieldName[0];
+        linkType.source = key + '&';
+        linkType.target = node.name;
         linksArray.push(linkType);
       }
     }
