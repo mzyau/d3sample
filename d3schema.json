@@ -171,6 +171,10 @@
   ],
   "links": [
     {
+      "source": "info",
+      "target": "Info"
+    },
+    {
       "source": "Query",
       "target": "info"
     },
@@ -309,6 +313,10 @@
     {
       "source": "Fixture",
       "target": "awayTeamName"
+    },
+    {
+      "source": "result",
+      "target": "Result"
     },
     {
       "source": "Fixture",
